@@ -27,7 +27,7 @@
 
 <nav >
     
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Campaign.html">Campaign</a><ul class='methods'><li data-type='method'><a href="Campaign.html#apply">apply</a></li></ul></li><li><a href="Cart.html">Cart</a><ul class='methods'><li data-type='method'><a href="Cart.html#addItem">addItem</a></li><li data-type='method'><a href="Cart.html#removeItem">removeItem</a></li><li data-type='method'><a href="Cart.html#applyDiscounts">applyDiscounts</a></li><li data-type='method'><a href="Cart.html#applyCoupon">applyCoupon</a></li><li data-type='method'><a href="Cart.html#getCampaignDiscounts">getCampaignDiscounts</a></li></ul></li><li><a href="CartHelper.html">CartHelper</a><ul class='methods'><li data-type='method'><a href="CartHelper.html#getCampaignDiscounts">getCampaignDiscounts</a></li></ul></li><li><a href="CartProduct.html">CartProduct</a></li><li><a href="Category.html">Category</a></li><li><a href="Coupon.html">Coupon</a><ul class='methods'><li data-type='method'><a href="Coupon.html#apply">apply</a></li></ul></li><li><a href="Delivery.html">Delivery</a><ul class='methods'><li data-type='method'><a href="Delivery.html#calculateFor">calculateFor</a></li></ul></li><li><a href="Product.html">Product</a></li></ul><h3>Global</h3><ul><li><a href="global.html#rate">rate</a></li><li><a href="global.html#amount">amount</a></li><li><a href="global.html#helpers">helpers</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Campaign.html">Campaign</a><ul class='methods'><li data-type='method'><a href="Campaign.html#apply">apply</a></li></ul></li><li><a href="Cart.html">Cart</a><ul class='methods'><li data-type='method'><a href="Cart.html#addItem">addItem</a></li><li data-type='method'><a href="Cart.html#removeItem">removeItem</a></li><li data-type='method'><a href="Cart.html#flattenCategories">flattenCategories</a></li><li data-type='method'><a href="Cart.html#applyDiscounts">applyDiscounts</a></li><li data-type='method'><a href="Cart.html#applyCoupon">applyCoupon</a></li><li data-type='method'><a href="Cart.html#getCampaignDiscounts">getCampaignDiscounts</a></li></ul></li><li><a href="CartHelper.html">CartHelper</a><ul class='members'><li data-type='member'><a href="CartHelper.html#.total">total</a></li><li data-type='member'><a href="CartHelper.html#.totalAfterDiscount">totalAfterDiscount</a></li><li data-type='member'><a href="CartHelper.html#distinctCategoryCount">distinctCategoryCount</a></li></ul><ul class='methods'><li data-type='method'><a href="CartHelper.html#getCampaignDiscounts">getCampaignDiscounts</a></li></ul></li><li><a href="CartProduct.html">CartProduct</a></li><li><a href="Category.html">Category</a></li><li><a href="Coupon.html">Coupon</a><ul class='methods'><li data-type='method'><a href="Coupon.html#apply">apply</a></li></ul></li><li><a href="Delivery.html">Delivery</a><ul class='methods'><li data-type='method'><a href="Delivery.html#calculateFor">calculateFor</a></li></ul></li><li><a href="Product.html">Product</a></li></ul><h3>Global</h3><ul><li><a href="global.html#rate">rate</a></li><li><a href="global.html#amount">amount</a></li><li><a href="global.html#helpers">helpers</a></li></ul>
 </nav>
 
 <div id="main">
@@ -75,7 +75,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="models_Cart.js.html">models/Cart.js</a>, <a href="models_Cart.js.html#line13">line 13</a>
+        <a href="models_Cart.js.html">models/Cart.js</a>, <a href="models_Cart.js.html#line15">line 15</a>
     </li></ul></dd>
     
 
@@ -124,6 +124,11 @@
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const cart = new Cart() // Creates empty shopping cart.</code></pre>
 
 
 
@@ -226,142 +231,6 @@
 
         
             
-<h4 class="name" id="total"><span class="type-signature"></span>total<span class="type-signature"></span></h4>
-
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="models_CartHelper.js.html">models/CartHelper.js</a>, <a href="models_CartHelper.js.html#line22">line 22</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="CartHelper.html#total">CartHelper#total</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Total getter calculates total price reactively.</p>
-</div>
-
-
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="totalAfterDiscount"><span class="type-signature"></span>totalAfterDiscount<span class="type-signature"></span></h4>
-
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="models_CartHelper.js.html">models/CartHelper.js</a>, <a href="models_CartHelper.js.html#line31">line 31</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="CartHelper.html#totalAfterDiscount">CartHelper#totalAfterDiscount</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>The getter calculates total amount after discount price reactively.</p>
-</div>
-
-
-
-
-
-
-
-
-        
-            
 <h4 class="name" id="distinctCategoryCount"><span class="type-signature"></span>distinctCategoryCount<span class="type-signature"></span></h4>
 
 
@@ -373,7 +242,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="models_CartHelper.js.html">models/CartHelper.js</a>, <a href="models_CartHelper.js.html#line40">line 40</a>
+        <a href="models_CartHelper.js.html">models/CartHelper.js</a>, <a href="models_CartHelper.js.html#line46">line 46</a>
     </li></ul></dd>
     
 
@@ -451,7 +320,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="models_Cart.js.html">models/Cart.js</a>, <a href="models_Cart.js.html#line26">line 26</a>
+        <a href="models_Cart.js.html">models/Cart.js</a>, <a href="models_Cart.js.html#line36">line 36</a>
     </li></ul></dd>
     
 
@@ -501,6 +370,16 @@ If exists, calculate quantity, total and etc.</p>
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const cart = new Cart() // Creates empty shopping cart for add products into.
+const product = new Product(new Category('Apple'), 'iPhone', 8000)
+cart.addItem(product, 5) // Add 5 iPhone, are u rich?
+cart.addItem(product, -3) // Add -3 iPhone, u decided to remove 3 of them?
+cart.addItem(product, -2) // Add -2 iPhone, ahh snap, u decided to remove all?
+cart.addItem(product, 1) // Add 1 iPhone, gotcha, u want only one of them.</code></pre>
 
 
 
@@ -611,7 +490,7 @@ If exists, calculate quantity, total and etc.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="models_Cart.js.html">models/Cart.js</a>, <a href="models_Cart.js.html#line44">line 44</a>
+        <a href="models_Cart.js.html">models/Cart.js</a>, <a href="models_Cart.js.html#line59">line 59</a>
     </li></ul></dd>
     
 
@@ -661,6 +540,14 @@ Remove and calculate total like properties.</p>
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const cart = new Cart() // Creates empty shopping cart for add products into.
+const product = new Product(new Category('Apple'), 'iPhone', 8000)
+cart.addItem(product, 5) // Add 5 iPhone, u are totally rich.
+cart.removeItem(product) // U decided donate the money to homeless kids.</code></pre>
 
 
 
@@ -736,6 +623,112 @@ Remove and calculate total like properties.</p>
 
     
 
+    <h4 class="name" id="flattenCategories"><span class="type-signature"></span>flattenCategories<span class="signature">()</span><span class="type-signature"> &rarr; {Map}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="models_Cart.js.html">models/Cart.js</a>, <a href="models_Cart.js.html#line73">line 73</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Flatten categories via counting sort.
+For delimiting campaigns.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Map</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
     <h4 class="name" id="applyDiscounts"><span class="type-signature"></span>applyDiscounts<span class="signature">(&hellip;discounts)</span><span class="type-signature"></span></h4>
 
     
@@ -748,7 +741,7 @@ Remove and calculate total like properties.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="models_Cart.js.html">models/Cart.js</a>, <a href="models_Cart.js.html#line59">line 59</a>
+        <a href="models_Cart.js.html">models/Cart.js</a>, <a href="models_Cart.js.html#line112">line 112</a>
     </li></ul></dd>
     
 
@@ -799,6 +792,19 @@ If can find the best discount on product, apply and calculate total amount.</p>
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const cart = new Cart()
+const category = new Category('Electronic')
+const product = new Product(category, 'iPhone', 8000)
+// Create campaign, bind 'Electronic' category which is;
+// %10 discount If you have 2 items in basket related category.
+const campaign = new Campaign(category, 10, 2, 'rate')
+cart.addItem(product, 2)
+// Apply campaign discounts to cart.
+cart.applyDiscounts(campaign)</code></pre>
 
 
 
@@ -898,7 +904,7 @@ If can find the best discount on product, apply and calculate total amount.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="models_Cart.js.html">models/Cart.js</a>, <a href="models_Cart.js.html#line131">line 131</a>
+        <a href="models_Cart.js.html">models/Cart.js</a>, <a href="models_Cart.js.html#line178">line 178</a>
     </li></ul></dd>
     
 
@@ -938,7 +944,7 @@ If can find the best discount on product, apply and calculate total amount.</p>
 
 
 <div class="description">
-    <p>Applies coupon</p>
+    <p>Applies coupons to cart.</p>
 </div>
 
 
@@ -947,6 +953,18 @@ If can find the best discount on product, apply and calculate total amount.</p>
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const cart = new Cart()
+const category = new Category('Electronic')
+const product = new Product(category, 'iPhone', 8000) // Create campaign, bind 'Electronic' category which is;
+// %10 discount If your cart total amount >= 15000.
+const coupon = new Coupon(10, 15000, 'rate')
+cart.addItem(product, 2) // Apply campaign discounts to cart.
+
+cart.applyCoupon(coupon)</code></pre>
 
 
 
@@ -1034,7 +1052,7 @@ If can find the best discount on product, apply and calculate total amount.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="models_CartHelper.js.html">models/CartHelper.js</a>, <a href="models_CartHelper.js.html#line54">line 54</a>
+        <a href="models_CartHelper.js.html">models/CartHelper.js</a>, <a href="models_CartHelper.js.html#line60">line 60</a>
     </li></ul></dd>
     
 
@@ -1188,7 +1206,7 @@ If can find the best discount on product, apply and calculate total amount.</p>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Tue Jun 04 2019 22:01:57 GMT+0300 (GMT+03:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Wed Jun 05 2019 01:51:45 GMT+0300 (GMT+03:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

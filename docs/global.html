@@ -27,7 +27,7 @@
 
 <nav >
     
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Campaign.html">Campaign</a><ul class='methods'><li data-type='method'><a href="Campaign.html#apply">apply</a></li></ul></li><li><a href="Cart.html">Cart</a><ul class='methods'><li data-type='method'><a href="Cart.html#addItem">addItem</a></li><li data-type='method'><a href="Cart.html#removeItem">removeItem</a></li><li data-type='method'><a href="Cart.html#applyDiscounts">applyDiscounts</a></li><li data-type='method'><a href="Cart.html#applyCoupon">applyCoupon</a></li><li data-type='method'><a href="Cart.html#getCampaignDiscounts">getCampaignDiscounts</a></li></ul></li><li><a href="CartHelper.html">CartHelper</a><ul class='methods'><li data-type='method'><a href="CartHelper.html#getCampaignDiscounts">getCampaignDiscounts</a></li></ul></li><li><a href="CartProduct.html">CartProduct</a></li><li><a href="Category.html">Category</a></li><li><a href="Coupon.html">Coupon</a><ul class='methods'><li data-type='method'><a href="Coupon.html#apply">apply</a></li></ul></li><li><a href="Delivery.html">Delivery</a><ul class='methods'><li data-type='method'><a href="Delivery.html#calculateFor">calculateFor</a></li></ul></li><li><a href="Product.html">Product</a></li></ul><h3>Global</h3><ul><li><a href="global.html#rate">rate</a></li><li><a href="global.html#amount">amount</a></li><li><a href="global.html#helpers">helpers</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Campaign.html">Campaign</a><ul class='methods'><li data-type='method'><a href="Campaign.html#apply">apply</a></li></ul></li><li><a href="Cart.html">Cart</a><ul class='methods'><li data-type='method'><a href="Cart.html#addItem">addItem</a></li><li data-type='method'><a href="Cart.html#removeItem">removeItem</a></li><li data-type='method'><a href="Cart.html#flattenCategories">flattenCategories</a></li><li data-type='method'><a href="Cart.html#applyDiscounts">applyDiscounts</a></li><li data-type='method'><a href="Cart.html#applyCoupon">applyCoupon</a></li><li data-type='method'><a href="Cart.html#getCampaignDiscounts">getCampaignDiscounts</a></li></ul></li><li><a href="CartHelper.html">CartHelper</a><ul class='members'><li data-type='member'><a href="CartHelper.html#.total">total</a></li><li data-type='member'><a href="CartHelper.html#.totalAfterDiscount">totalAfterDiscount</a></li><li data-type='member'><a href="CartHelper.html#distinctCategoryCount">distinctCategoryCount</a></li></ul><ul class='methods'><li data-type='method'><a href="CartHelper.html#getCampaignDiscounts">getCampaignDiscounts</a></li></ul></li><li><a href="CartProduct.html">CartProduct</a></li><li><a href="Category.html">Category</a></li><li><a href="Coupon.html">Coupon</a><ul class='methods'><li data-type='method'><a href="Coupon.html#apply">apply</a></li></ul></li><li><a href="Delivery.html">Delivery</a><ul class='methods'><li data-type='method'><a href="Delivery.html#calculateFor">calculateFor</a></li></ul></li><li><a href="Product.html">Product</a></li></ul><h3>Global</h3><ul><li><a href="global.html#rate">rate</a></li><li><a href="global.html#amount">amount</a></li><li><a href="global.html#helpers">helpers</a></li></ul>
 </nav>
 
 <div id="main">
@@ -191,7 +191,7 @@
 
     
 
-    <h4 class="name" id="rate"><span class="type-signature"></span>rate<span class="signature">(price, rate)</span><span class="type-signature"> &rarr; {number}</span></h4>
+    <h4 class="name" id="rate"><span class="type-signature"></span>rate<span class="signature">(price, rate)</span><span class="type-signature"> &rarr; {Number}</span></h4>
 
     
 
@@ -295,7 +295,7 @@ helpers.discount.rate(200, 500) // returns 0</code></pre>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 
             
@@ -318,7 +318,7 @@ helpers.discount.rate(200, 500) // returns 0</code></pre>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 
             
@@ -365,7 +365,7 @@ helpers.discount.rate(200, 500) // returns 0</code></pre>
     </dt>
     <dd>
         
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 
     </dd>
@@ -380,7 +380,7 @@ helpers.discount.rate(200, 500) // returns 0</code></pre>
 
     
 
-    <h4 class="name" id="amount"><span class="type-signature"></span>amount<span class="signature">(price, rate)</span><span class="type-signature"> &rarr; {number}</span></h4>
+    <h4 class="name" id="amount"><span class="type-signature"></span>amount<span class="signature">(price, rate)</span><span class="type-signature"> &rarr; {Number}</span></h4>
 
     
 
@@ -484,7 +484,7 @@ helpers.discount.amount(200, -5) // returns 195</code></pre>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 
             
@@ -507,7 +507,7 @@ helpers.discount.amount(200, -5) // returns 195</code></pre>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 
             
@@ -554,7 +554,7 @@ helpers.discount.amount(200, -5) // returns 195</code></pre>
     </dt>
     <dd>
         
-<span class="param-type">number</span>
+<span class="param-type">Number</span>
 
 
     </dd>
@@ -584,7 +584,7 @@ helpers.discount.amount(200, -5) // returns 195</code></pre>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Tue Jun 04 2019 22:01:57 GMT+0300 (GMT+03:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Wed Jun 05 2019 01:51:45 GMT+0300 (GMT+03:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
