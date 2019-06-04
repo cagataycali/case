@@ -19,12 +19,6 @@
   "bin": {
     "ccase": "./lib/bin/index.js"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn build && yarn lint",
-      "pre-push": "yarn test && yarn docs && rsync docs/ccase/**/* docs/ && rm -rf ./docs/ccase"
-    }
-  },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
