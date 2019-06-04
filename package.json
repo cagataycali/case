@@ -23,7 +23,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "yarn build && yarn lint",
-      "pre-push": "yarn test && yarn docs && yarn prepare-docs"
+      "pre-push": "yarn test && yarn docs && yarn pages"
     }
   },
   "devDependencies": {
