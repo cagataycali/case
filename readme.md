@@ -10,7 +10,7 @@ This repository contains a CLI app which provides following abilities;
 * Calculate delivery cost dynamically given params.
 
 ![](./assets/case.gif)
-![](./assets/codeCoverage.gif)
+![](./assets/codeCoverage.png)
 
 # Installation
 
