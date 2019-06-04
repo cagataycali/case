@@ -85,7 +85,7 @@ test('Check quantity calculation', () => {
   ])
 })
 
-test('Check false adding / removal', () => {
+test('Check false adding -> removal', () => {
   const {
     cart,
     apple
@@ -94,6 +94,11 @@ test('Check false adding / removal', () => {
   expect(() => {
     cart.addItem(apple, 5.0)
     cart.addItem(apple, -5.0)
+  }).toThrowError(new Error('Product removed from your cart.'))
+
+  expect(() => {
+    cart.addItem(apple, 5.0)
+    cart.addItem(apple, -10.0)
   }).toThrowError(new Error('Quantity must be acceptable.'))
 })
 

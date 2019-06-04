@@ -28,6 +28,9 @@ class Cart extends CartHelper {
 
     if (!cartProduct) {
       this.products.push(new CartProduct(product, quantity))
+    } else if (cartProduct.quantity === Math.abs(quantity)) {
+      this.removeItem(cartProduct)
+      throw new Error('Product removed from your cart.')
     } else {
       cartProduct.quantity += quantity
     }
