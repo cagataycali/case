@@ -1,6 +1,6 @@
 # Shopping Cart Implementation (OOP, TDD, vice versa)
 
-[![Build Status](https://travis-ci.org/cagataycali/case.svg?branch=master)](https://travis-ci.org/cagataycali/case) [![Coverage Status](https://coveralls.io/repos/github/cagataycali/case/badge.svg?branch=master)](https://coveralls.io/github/cagataycali/case?branch=master)
+[![Build Status](https://travis-ci.org/cagataycali/case.svg?branch=master)](https://travis-ci.org/cagataycali/case) [![Coverage Status](https://coveralls.io/repos/github/cagataycali/case/badge.svg?branch=master)](https://coveralls.io/github/cagataycali/case?branch=master) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 ----
 
 This repository contains a CLI app which provides following abilities;

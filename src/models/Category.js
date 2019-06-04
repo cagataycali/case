@@ -12,8 +12,8 @@ class Category {
   /**
    * Create a category.
    * @param {Category} parent - The category which the category belongs to.
-   * @param {string} title - Category title.
-   * @param {boolean} leaf - Category is leaf or not?
+   * @param {String} title - Category title.
+   * @param {Boolean} leaf - Category is leaf or not?
    */
   constructor (title, parent = null, leaf = false) {
     this.title = title

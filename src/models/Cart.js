@@ -3,6 +3,8 @@ import CartProduct from './CartProduct'
 
 /**
  * Class representing a shopping cart.
+ * @example
+ * const cart = new Cart() // Creates empty shopping cart.
  * @extends CartHelper
  */
 class Cart extends CartHelper {
@@ -20,6 +22,14 @@ class Cart extends CartHelper {
   /**
    * Adds products into shopping cart if does not exists,
    * If exists, calculate quantity, total and etc.
+   * @example
+   * const cart = new Cart() // Creates empty shopping cart for add products into.
+   * const product = new Product(new Category('Apple'), 'iPhone', 8000)
+   * cart.addItem(product, 5) // Add 5 iPhone, are u rich?
+   * cart.addItem(product, -3) // Add -3 iPhone, u decided to remove 3 of them?
+   * cart.addItem(product, -2) // Add -2 iPhone, ahh snap, u decided to remove all?
+   * cart.addItem(product, 1) // Add 1 iPhone, gotcha, u want only one of them.
+   *
    * @param {Product} product
    * @param {number} quantity
    */
@@ -39,6 +49,11 @@ class Cart extends CartHelper {
   /**
    * Find related product in cart products,
    * Remove and calculate total like properties.
+   * @example
+   * const cart = new Cart() // Creates empty shopping cart for add products into.
+   * const product = new Product(new Category('Apple'), 'iPhone', 8000)
+   * cart.addItem(product, 5) // Add 5 iPhone, u are totally rich.
+   * cart.removeItem(product) // U decided donate the money to homeless kids.
    * @param {Product} product
    */
   removeItem (product) {
@@ -51,9 +66,47 @@ class Cart extends CartHelper {
   }
 
   /**
+   * Flatten categories via counting sort.
+   * For delimiting campaigns.
+   * @returns {Map}
+  */
+  flattenCategories () {
+    const categories = new Map()
+
+    this.products.map(cartProduct => {
+      const {
+        _quantity,
+        product
+      } = cartProduct
+
+      function findParent (category) {
+        categories.set(category.title,
+          ((categories.get(category.title) + 1) || _quantity)
+        )
+        if (category.leaf) {
+          findParent(category.parent)
+        }
+      }
+      findParent(product.category)
+    })
+
+    return categories
+  }
+
+  /**
    * Simply, applies discounts,
    * Flatten the categories via counting sort, check delimits of discount.
    * If can find the best discount on product, apply and calculate total amount.
+   * @example
+   * const cart = new Cart()
+   * const category = new Category('Electronic')
+   * const product = new Product(category, 'iPhone', 8000)
+   * // Create campaign, bind 'Electronic' category which is;
+   * // %10 discount If you have 2 items in basket related category.
+   * const campaign = new Campaign(category, 10, 2, 'rate')
+   * cart.addItem(product, 2)
+   * // Apply campaign discounts to cart.
+   * cart.applyDiscounts(campaign)
    * @param  {...Campaign} discounts
    */
   applyDiscounts (...discounts) {
@@ -66,23 +119,8 @@ class Cart extends CartHelper {
       throw new Error('Campaign can not applicable after using coupon.')
     }
 
-    /*
-      Flatten categories via counting sort.
-      For delimiting campaigns.
-    */
-    const categories = new Map()
-    this.products.map(cartProduct => {
-      const { _quantity, product } = cartProduct
-      function findParent (category) {
-        categories.set(category.title,
-          ((categories.get(category.title) + 1) || _quantity)
-        )
-        if (category.leaf) {
-          findParent(category.parent)
-        }
-      }
-      findParent(product.category)
-    })
+    // Flattened categories via counting sort.
+    const categories = this.flattenCategories()
 
     this.products.map(cartProduct => {
       const product = cartProduct.product
@@ -125,7 +163,16 @@ class Cart extends CartHelper {
   }
 
   /**
-   * Applies coupon
+   * Applies coupons to cart.
+   * @example
+   * const cart = new Cart()
+   * const category = new Category('Electronic')
+   * const product = new Product(category, 'iPhone', 8000) // Create campaign, bind 'Electronic' category which is;
+   * // %10 discount If your cart total amount >= 15000.
+   * const coupon = new Coupon(10, 15000, 'rate')
+   * cart.addItem(product, 2) // Apply campaign discounts to cart.
+   *
+   * cart.applyCoupon(coupon)
    * @param {Coupon} coupon
    */
   applyCoupon (coupon) {

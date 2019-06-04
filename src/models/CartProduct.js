@@ -8,7 +8,7 @@ class CartProduct extends Product {
   /**
    * Create a Cart Product.
    * @param {Product} product - The product.
-   * @param {number} quantity - The quantity of product.
+   * @param {Number} quantity - The quantity of product.
    */
   constructor (product, quantity = 1) {
     if (!product) {
@@ -31,7 +31,7 @@ class CartProduct extends Product {
   /**
    * Setter of quantity, manipulates private "_quantity" variable.
    * Calculate total price by then.
-   * @param {number} quantity - The quantity of product.
+   * @param {Number} quantity - The quantity of product.
    */
   set quantity (quantity) {
     if (quantity % 1) {

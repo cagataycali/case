@@ -5,9 +5,9 @@ class CartHelper {
   /**
    * Create a Cart Helper.
    * @param {Array.<Product>} products - The products.
-   * @param {Arrray.<Campaign>} discounts - The discounts.
+   * @param {Array.<Campaign>} discounts - The discounts.
    * @param {Coupon} coupon - Applied coupon.
-   * @param {number} couponDiscount - Coupon's discount of cart total.
+   * @param {Number} couponDiscount - Coupon's discount of cart total.
    */
   constructor (products) {
     this.products = products
@@ -18,6 +18,9 @@ class CartHelper {
 
   /**
    * Total getter calculates total price reactively.
+   * @memberof CartHelper
+   * @public
+   * @member {Number} total
    */
   get total () {
     let total = 0
@@ -27,6 +30,9 @@ class CartHelper {
 
   /**
    * The getter calculates total amount after discount price reactively.
+   * @memberof CartHelper
+   * @public
+   * @member {Number} totalAfterDiscount
    */
   get totalAfterDiscount () {
     let total = 0

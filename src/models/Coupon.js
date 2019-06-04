@@ -13,9 +13,9 @@ import helpers from '../helpers'
 class Coupon {
   /**
    * Create a Campaign.
-   * @param {number} delimiter - The coupon delimiter works depends type.
-   * @param {number} worth - The coupon worth, it can be represent amount or rate.
-   * @param {string} type - The type can be "amount" or "rate".
+   * @param {Number} delimiter - The coupon delimiter works depends type.
+   * @param {Number} worth - The coupon worth, it can be represent amount or rate.
+   * @param {String} type - The type can be "amount" or "rate".
    */
   constructor (delimiter, worth, type) {
     this.delimiter = delimiter
@@ -24,8 +24,8 @@ class Coupon {
   }
 
   /**
-   * @param {number} price - The coupon seed worth, it can be represent amount or rate.
-   * @return {number} Returns calculated discount.
+   * @param {Number} price - The coupon seed worth, it can be represent amount or rate.
+   * @return {Number} Returns calculated discount.
   */
   apply (price) {
     if (price < this.delimiter) {

@@ -4,9 +4,9 @@
 class Delivery {
   /**
    * Create a Delivery Calculator.
-   * @param {number} costPerDelivery
-   * @param {number} costPerProduct
-   * @param {number} fixedCost
+   * @param {Number} costPerDelivery
+   * @param {Number} costPerProduct
+   * @param {Number} fixedCost
    */
   constructor (costPerDelivery = 0, costPerProduct = 0, fixedCost = 2.99) {
     this.costPerDelivery = costPerDelivery
@@ -17,6 +17,7 @@ class Delivery {
   /**
    * Delivery calculator calculates dynamically delivery costs by cart properties.
    * @param {Cart} cart
+   * @returns {Number}
    */
   calculateFor (cart) {
     if (!cart) {
