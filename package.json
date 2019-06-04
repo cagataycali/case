@@ -21,7 +21,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn build && yarn lint && chmod +x lib/bin/*",
+      "pre-commit": "yarn build && yarn lint",
       "pre-push": "yarn test && yarn docs && rsync ./docs/case/1.0.0/* ./docs/ && rm -rf ./docs/case"
     }
   },
