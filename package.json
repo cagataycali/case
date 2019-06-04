@@ -2,7 +2,7 @@
   "name": "ccase",
   "version": "1.0.1",
   "description": "Shopping card case",
-  "main": "index.js",
+  "main": "lib/bin/index.js",
   "repository": "git@github.com:cagataycali/case.git",
   "author": "cagataycali <cagataycali@icloud.com>",
   "license": "MIT",
