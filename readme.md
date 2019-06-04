@@ -12,9 +12,15 @@ This repository contains a CLI app which provides following abilities;
 ![](./assets/case.gif)
 ![](./assets/codeCoverage.png)
 
-# Installation
+# :rocket: Installation
 
 ```
 npm i -g ccase;
 ccase
 ```
+
+# :books: Docs
+
+> Implementation is fully documented with [JSDoc](https://devdocs.io/jsdoc/),
+
+[Documentation](https://cagatay.js.org/case/)
