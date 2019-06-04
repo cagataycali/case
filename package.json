@@ -14,10 +14,17 @@
     "test-watch": "npm run test -- --watch",
     "lint": "eslint --ignore-pattern \"node_modules/**/*.js\" \"src/models/**/*.js\" --fix",
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
-    "docs": "jsdoc --configure .jsdoc.json --verbose"
+    "docs": "jsdoc --configure .jsdoc.json --verbose",
+    "preapare-docs": "rsync docs/ccase/**/* docs/ && rsync assets/* docs/assets/"
   },
   "bin": {
     "ccase": "./lib/bin/index.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn build && yarn lint",
+      "pre-push": "yarn test && yarn docs && yarn prepare-docs"
+    }
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
