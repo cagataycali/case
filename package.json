@@ -1,5 +1,5 @@
 {
-  "name": "case",
+  "name": "ccase",
   "version": "1.0.0",
   "description": "Shopping card case",
   "main": "index.js",
@@ -17,7 +17,7 @@
     "docs": "jsdoc --configure .jsdoc.json --verbose"
   },
   "bin": {
-    "case": "./lib/bin/index.js"
+    "ccase": "./lib/bin/index.js"
   },
   "husky": {
     "hooks": {
