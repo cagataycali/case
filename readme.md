@@ -20,6 +20,8 @@ npm i -g ccase;
 ccase
 ```
 
+> Extra 'c' is not a typo, cagatay cali's case -> ccase
+
 # :books: Docs
 
 > Implementation is fully documented with [JSDoc](https://devdocs.io/jsdoc/),

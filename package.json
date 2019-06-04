@@ -22,7 +22,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "yarn build && yarn lint",
-      "pre-push": "yarn test && yarn docs && rsync ./docs/case/1.0.0/* ./docs/ && rm -rf ./docs/case"
+      "pre-push": "yarn test && yarn docs && rsync ./docs/ccase/1.0.0/* ./docs/ && rm -rf ./docs/ccase"
     }
   },
   "devDependencies": {
