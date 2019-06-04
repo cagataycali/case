@@ -7,6 +7,7 @@ This repository contains a CLI app which provides following abilities;
 * Create cart,
 * Add - remove products to cart which belongs categories,
 * Create category may have parent,
+* Apply campaigns and/or coupons to cart,
 * Calculate delivery cost dynamically given params.
 
 ![](./assets/case.gif)
