@@ -1,0 +1,56 @@
+{
+  "name": "case",
+  "version": "1.0.0",
+  "description": "Shopping card case",
+  "main": "index.js",
+  "repository": "git@github.com:cagataycali/case.git",
+  "author": "cagataycali <cagataycali@icloud.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "babel src -d lib && chmod +x lib/bin/*",
+    "start": "lib/bin/index.js",
+    "test": "jest",
+    "test-watch": "npm run test -- --watch",
+    "lint": "eslint --ignore-pattern \"node_modules/**/*.js\" \"src/models/**/*.js\" --fix",
+    "coveralls": "jest --coverage && cat ./tests/coverage/lcov.info | coveralls",
+    "docs": "jsdoc --configure .jsdoc.json --verbose"
+  },
+  "bin": {
+    "case": "./lib/bin/index.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn build && yarn lint && chmod +x lib/bin/*",
+      "pre-push": "yarn test && yarn docs && rsync ./docs/case/1.0.0/* ./docs/ && rm -rf ./docs/case"
+    }
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-export-default-from": "^7.2.0",
+    "@babel/plugin-transform-classes": "^7.4.4",
+    "@babel/plugin-transform-runtime": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "babel-eslint": "^10.0.1",
+    "coveralls": "^3.0.3",
+    "docdash": "^1.1.1",
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-flowtype": "^3.9.1",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-jest": "^22.6.4",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "husky": "^2.3.0",
+    "jest": "^24.8.0",
+    "jsdoc": "^3.6.2"
+  },
+  "dependencies": {
+    "clear": "^0.1.0",
+    "cli-table": "^0.3.1",
+    "colors": "^1.3.3",
+    "inquirer": "^6.3.1"
+  }
+}

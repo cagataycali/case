@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>models/Cart.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Campaign.html">Campaign</a><ul class='methods'><li data-type='method'><a href="Campaign.html#apply">apply</a></li></ul></li><li><a href="Cart.html">Cart</a><ul class='methods'><li data-type='method'><a href="Cart.html#addItem">addItem</a></li><li data-type='method'><a href="Cart.html#removeItem">removeItem</a></li><li data-type='method'><a href="Cart.html#applyDiscounts">applyDiscounts</a></li><li data-type='method'><a href="Cart.html#applyCoupon">applyCoupon</a></li><li data-type='method'><a href="Cart.html#getCampaignDiscounts">getCampaignDiscounts</a></li></ul></li><li><a href="CartHelper.html">CartHelper</a><ul class='methods'><li data-type='method'><a href="CartHelper.html#getCampaignDiscounts">getCampaignDiscounts</a></li></ul></li><li><a href="CartProduct.html">CartProduct</a></li><li><a href="Category.html">Category</a></li><li><a href="Coupon.html">Coupon</a><ul class='methods'><li data-type='method'><a href="Coupon.html#apply">apply</a></li></ul></li><li><a href="Delivery.html">Delivery</a><ul class='methods'><li data-type='method'><a href="Delivery.html#calculateFor">calculateFor</a></li></ul></li><li><a href="Product.html">Product</a></li></ul><h3>Global</h3><ul><li><a href="global.html#rate">rate</a></li><li><a href="global.html#amount">amount</a></li><li><a href="global.html#helpers">helpers</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">models/Cart.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import CartHelper from './CartHelper'
+import CartProduct from './CartProduct'
+
+/**
+ * Class representing a shopping cart.
+ * @extends CartHelper
+ */
+class Cart extends CartHelper {
+  /**
+   * Create Cart.
+   * @param {Array.&lt;Product>} products - Creates empty products, bind parent helper.
+   */
+  constructor (products = []) {
+    super(products)
+    this.totalSavingViaCampaign = 0
+    this.couponDiscount = 0
+    this.campaignUsed = false
+  }
+
+  /**
+   * Adds products into shopping cart if does not exists,
+   * If exists, calculate quantity, total and etc.
+   * @param {Product} product
+   * @param {number} quantity
+   */
+  addItem (product, quantity) {
+    const cartProduct = this.products.find(cartProduct => cartProduct.product === product)
+
+    if (!cartProduct) {
+      this.products.push(new CartProduct(product, quantity))
+    } else {
+      cartProduct.quantity += quantity
+    }
+  }
+
+  /**
+   * Find related product in cart products,
+   * Remove and calculate total like properties.
+   * @param {Product} product
+   */
+  removeItem (product) {
+    if (product instanceof CartProduct) {
+      product = product.product
+    }
+    this.products = this.products.filter(({
+      product: _product
+    }) => _product !== product)
+  }
+
+  /**
+   * Simply, applies discounts,
+   * Flatten the categories via counting sort, check delimits of discount.
+   * If can find the best discount on product, apply and calculate total amount.
+   * @param  {...Campaign} discounts
+   */
+  applyDiscounts (...discounts) {
+    this.discounts = discounts
+    if (this.campaignUsed) {
+      throw new Error('Campaign used before')
+    }
+
+    if (this.couponDiscount > 0) {
+      throw new Error('Campaign can not applicable after using coupon.')
+    }
+
+    /*
+      Flatten categories via counting sort.
+      For delimiting campaigns.
+    */
+    const categories = new Map()
+    this.products.map(cartProduct => {
+      const { _quantity, product } = cartProduct
+      function findParent (category) {
+        categories.set(category.title,
+          ((categories.get(category.title) + 1) || _quantity)
+        )
+        if (category.leaf) {
+          findParent(category.parent)
+        }
+      }
+      findParent(product.category)
+    })
+
+    this.products.map(cartProduct => {
+      const product = cartProduct.product
+      let total = cartProduct.total
+      let min = cartProduct.total
+      let selectedDiscount
+
+      /*
+        findBestDiscount: inline function, is a recursion till find category parent.
+        It tries to find the most appropriate campaign by checking the campaign limits.
+      */
+      const findBestDiscount = category => {
+        // Find spesified category discount
+        const discount = this.discounts.find(discount => discount.category.title === category.title)
+        // Should I apply campaign to the product? -optimistic
+        let apply = true
+        if (discount &amp;&amp; (discount.apply(total) &lt; min)) {
+          // Apply discount only delimiter fits the campaign
+          apply = (discount.type === 'rate' ? categories.get(category.title) : total) >= discount.delimiter
+          // Gotcha!
+          if (apply) {
+            min = discount.apply(total)
+            selectedDiscount = discount
+            this.campaignUsed = true
+          }
+        }
+        // I'm awaiting your parents to school tomorrow.
+        if (category.leaf) {
+          findBestDiscount(category.parent)
+        }
+      }
+
+      findBestDiscount(product.category)
+
+      cartProduct.discount = selectedDiscount
+      cartProduct.priceAfterDiscount = min
+      cartProduct.savingViaCampaign = total - min
+      this.totalSavingViaCampaign += cartProduct.savingViaCampaign
+    })
+  }
+
+  /**
+   * Applies coupon
+   * @param {Coupon} coupon
+   */
+  applyCoupon (coupon) {
+    const total = this.totalAfterDiscount || this.total
+
+    if (this.couponDiscount > 0) {
+      throw new Error('Another coupon has applied.')
+    }
+    if (total >= coupon.delimiter) {
+      this.coupon = coupon
+      this.couponDiscount = total - coupon.apply(total)
+    } else {
+      throw new Error('Coupon does not fits delimiter.')
+    }
+  }
+}
+
+export default Cart
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Tue Jun 04 2019 09:11:07 GMT+0300 (GMT+03:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

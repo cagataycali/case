@@ -1,0 +1,29 @@
+{
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": ["jsdoc"]
+    },
+    "source": {
+        "include": ["./src/models", "./src/helpers.js", "package.json", "readme.md"],
+        "includePattern": ".js$",
+        "excludePattern": "(node_modules/|docs|coverage)"
+    },
+    "plugins": [
+        "plugins/markdown"
+    ],
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": true
+    },
+    "opts": {
+        "destination": "./docs/",
+        "encoding": "utf8",
+        "private": false,
+        "recurse": true,
+        "template": "node_modules/docdash"
+    },
+    "docdash": {
+        "static": true,
+        "sort": false
+    }
+}
