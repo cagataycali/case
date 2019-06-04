@@ -6,7 +6,7 @@
   "repository": "git@github.com:cagataycali/case.git",
   "author": "cagataycali <cagataycali@icloud.com>",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "scripts": {
     "build": "babel src -d lib && chmod +x lib/bin/*",
     "start": "lib/bin/index.js",
