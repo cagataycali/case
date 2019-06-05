@@ -1,180 +1,48 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Code coverage report for src/helpers.js</title>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="../prettify.css" />
-    <link rel="stylesheet" href="../base.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style type='text/css'>
-        .coverage-summary .sorter {
-            background-image: url(../sort-arrow-sprite.png);
-        }
-    </style>
+    
+    <meta charset="utf-8">
+    <title>helpers.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<div class='wrapper'>
-  <div class='pad1'>
-    <h1>
-      <a href="../index.html">All files</a> / <a href="index.html">src</a> helpers.js
-    </h1>
-    <div class='clearfix'>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
-        <span class="quiet">Statements</span>
-        <span class='fraction'>11/11</span>
-      </div>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
-        <span class="quiet">Branches</span>
-        <span class='fraction'>8/8</span>
-      </div>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
-        <span class="quiet">Functions</span>
-        <span class='fraction'>5/5</span>
-      </div>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
-        <span class="quiet">Lines</span>
-        <span class='fraction'>11/11</span>
-      </div>
-    </div>
-    <p class="quiet">
-      Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
-    </p>
-  </div>
-  <div class='status-line high'></div>
-<pre><table class="coverage">
-<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
-<a name='L2'></a><a href='#L2'>2</a>
-<a name='L3'></a><a href='#L3'>3</a>
-<a name='L4'></a><a href='#L4'>4</a>
-<a name='L5'></a><a href='#L5'>5</a>
-<a name='L6'></a><a href='#L6'>6</a>
-<a name='L7'></a><a href='#L7'>7</a>
-<a name='L8'></a><a href='#L8'>8</a>
-<a name='L9'></a><a href='#L9'>9</a>
-<a name='L10'></a><a href='#L10'>10</a>
-<a name='L11'></a><a href='#L11'>11</a>
-<a name='L12'></a><a href='#L12'>12</a>
-<a name='L13'></a><a href='#L13'>13</a>
-<a name='L14'></a><a href='#L14'>14</a>
-<a name='L15'></a><a href='#L15'>15</a>
-<a name='L16'></a><a href='#L16'>16</a>
-<a name='L17'></a><a href='#L17'>17</a>
-<a name='L18'></a><a href='#L18'>18</a>
-<a name='L19'></a><a href='#L19'>19</a>
-<a name='L20'></a><a href='#L20'>20</a>
-<a name='L21'></a><a href='#L21'>21</a>
-<a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a>
-<a name='L24'></a><a href='#L24'>24</a>
-<a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a>
-<a name='L38'></a><a href='#L38'>38</a>
-<a name='L39'></a><a href='#L39'>39</a>
-<a name='L40'></a><a href='#L40'>40</a>
-<a name='L41'></a><a href='#L41'>41</a>
-<a name='L42'></a><a href='#L42'>42</a>
-<a name='L43'></a><a href='#L43'>43</a>
-<a name='L44'></a><a href='#L44'>44</a>
-<a name='L45'></a><a href='#L45'>45</a>
-<a name='L46'></a><a href='#L46'>46</a>
-<a name='L47'></a><a href='#L47'>47</a>
-<a name='L48'></a><a href='#L48'>48</a>
-<a name='L49'></a><a href='#L49'>49</a>
-<a name='L50'></a><a href='#L50'>50</a>
-<a name='L51'></a><a href='#L51'>51</a>
-<a name='L52'></a><a href='#L52'>52</a>
-<a name='L53'></a><a href='#L53'>53</a>
-<a name='L54'></a><a href='#L54'>54</a>
-<a name='L55'></a><a href='#L55'>55</a>
-<a name='L56'></a><a href='#L56'>56</a>
-<a name='L57'></a><a href='#L57'>57</a>
-<a name='L58'></a><a href='#L58'>58</a>
-<a name='L59'></a><a href='#L59'>59</a>
-<a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">40x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">107x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">52x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">50x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Campaign.html">Campaign</a><ul class='methods'><li data-type='method'><a href="Campaign.html#apply">apply</a></li></ul></li><li><a href="Cart.html">Cart</a><ul class='methods'><li data-type='method'><a href="Cart.html#addItem">addItem</a></li><li data-type='method'><a href="Cart.html#removeItem">removeItem</a></li><li data-type='method'><a href="Cart.html#flattenCategories">flattenCategories</a></li><li data-type='method'><a href="Cart.html#applyDiscounts">applyDiscounts</a></li><li data-type='method'><a href="Cart.html#applyCoupon">applyCoupon</a></li><li data-type='method'><a href="Cart.html#getCampaignDiscounts">getCampaignDiscounts</a></li></ul></li><li><a href="CartHelper.html">CartHelper</a><ul class='members'><li data-type='member'><a href="CartHelper.html#.total">total</a></li><li data-type='member'><a href="CartHelper.html#.totalAfterDiscount">totalAfterDiscount</a></li><li data-type='member'><a href="CartHelper.html#distinctCategoryCount">distinctCategoryCount</a></li></ul></li><li><a href="CartProduct.html">CartProduct</a></li><li><a href="Category.html">Category</a></li><li><a href="Coupon.html">Coupon</a><ul class='methods'><li data-type='method'><a href="Coupon.html#apply">apply</a></li></ul></li><li><a href="Delivery.html">Delivery</a><ul class='methods'><li data-type='method'><a href="Delivery.html#calculateFor">calculateFor</a></li></ul></li><li><a href="Product.html">Product</a></li></ul><h3>Global</h3><ul><li><a href="global.html#rate">rate</a></li><li><a href="global.html#amount">amount</a></li><li><a href="global.html#isAcceptableString">isAcceptableString</a></li><li><a href="global.html#isNumber">isNumber</a></li><li><a href="global.html#isGreaterThanZero">isGreaterThanZero</a></li><li><a href="global.html#helpers">helpers</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">helpers.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * Rate calculator.
  * @example
  * helpers.discount.rate(200, 0) // returns 200
@@ -185,9 +53,9 @@
  * @param {Number} rate - Ratio.
  * @returns {Number} Method apply discount given price by rate.
  */
-const rate = (price, rate) =&gt;
+const rate = (price, rate) =>
   Math.max(0, price - (price * Math.abs(rate) / 100))
-&nbsp;
+
 /**
  * Amount calculator.
  * @example
@@ -200,32 +68,32 @@ const rate = (price, rate) =&gt;
  * @param {Number} rate - Ratio.
  * @returns {Number} Method apply discount given price by amount.
  */
-const amount = (price, amount) =&gt;
-  Math.max(price - (Math.abs(amount) &gt; price ? price : Math.abs(amount)), 0)
-&nbsp;
+const amount = (price, amount) =>
+  Math.max(price - (Math.abs(amount) > price ? price : Math.abs(amount)), 0)
+
 /**
  * Check input is acceptable string.
  * [^a-z^A-Z]+ // Matchs any non word chars numerics excluded also.
  * @param {?String} input
  */
-const isAcceptableString = input =&gt;
+const isAcceptableString = input =>
   Object.prototype.toString.call(input) === '[object String]' &amp;&amp;
-    input.replace(new RegExp('[^a-z^A-Z]+'), '').length &gt; 0
-&nbsp;
+    input.replace(new RegExp('[^a-z^A-Z]+'), '').length > 0
+
 /**
  * Check input is number.
- * @param {?Number} input
+ * @param {Number} input
  */
-const isNumber = input =&gt;
+const isNumber = input =>
   Object.prototype.toString.call(input) === '[object Number]' &amp;&amp; !isNaN(input)
-&nbsp;
+
 /**
  * Check input is number and greater than zero.
- * @param {?Number} input
+ * @param {Number} input
  */
-const isGreaterThanZero = input =&gt;
-  isNumber(input) &amp;&amp; input &gt; 0
-&nbsp;
+const isGreaterThanZero = input =>
+  isNumber(input) &amp;&amp; input > 0
+
 /** Discount helper methods composer. */
 const helpers = {
   discount: {
@@ -236,26 +104,30 @@ const helpers = {
   isNumber,
   isGreaterThanZero
 }
-&nbsp;
+
 export default helpers
-&nbsp;</pre></td></tr>
-</table></pre>
-<div class='push'></div><!-- for sticky footer -->
-</div><!-- /wrapper -->
-<div class='footer quiet pad2 space-top1 center small'>
-  Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jun 05 2019 08:43:49 GMT+0300 (GMT+03:00)
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
 </div>
-</div>
-<script src="../prettify.js"></script>
-<script>
-window.onload = function () {
-        if (typeof prettyPrint === 'function') {
-            prettyPrint();
-        }
-};
-</script>
-<script src="../sorter.js"></script>
-<script src="../block-navigation.js"></script>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Wed Jun 05 2019 08:53:11 GMT+0300 (GMT+03:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
 </body>
 </html>
