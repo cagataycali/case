@@ -38,14 +38,14 @@ const isAcceptableString = input =>
 
 /**
  * Check input is number.
- * @param {?Number} input
+ * @param {Number} input
  */
 const isNumber = input =>
   Object.prototype.toString.call(input) === '[object Number]' && !isNaN(input)
 
 /**
  * Check input is number and greater than zero.
- * @param {?Number} input
+ * @param {Number} input
  */
 const isGreaterThanZero = input =>
   isNumber(input) && input > 0
