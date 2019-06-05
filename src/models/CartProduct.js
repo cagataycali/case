@@ -11,10 +11,11 @@ class CartProduct extends Product {
    * @param {Number} quantity - The quantity of product.
    */
   constructor (product, quantity = 1) {
-    if (!product) {
-      throw new Error('Product does not exists')
+    if (!product || !(product instanceof Product)) {
+      throw new Error('Product must be binded.')
     }
-    super(product.title, product.price, product.category.title)
+    super(product.title, product.price, product.category)
+    // super(product.title, product.price, product.category.title)
     if (quantity % 1) {
       throw new Error('Quantity must be int.')
     }
@@ -26,6 +27,7 @@ class CartProduct extends Product {
     this._quantity = quantity
     this.total = (product.price * quantity)
     this.product = product
+    this.priceAfterDiscount = (product.price * quantity)
   }
 
   /**

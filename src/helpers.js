@@ -9,7 +9,8 @@
  * @param {Number} rate - Ratio.
  * @returns {Number} Method apply discount given price by rate.
  */
-const rate = (price, rate) => Math.max(0, price - (price * Math.abs(rate) / 100))
+const rate = (price, rate) =>
+  Math.max(0, price - (price * Math.abs(rate) / 100))
 
 /**
  * Amount calculator.
@@ -23,15 +24,41 @@ const rate = (price, rate) => Math.max(0, price - (price * Math.abs(rate) / 100)
  * @param {Number} rate - Ratio.
  * @returns {Number} Method apply discount given price by amount.
  */
-const amount = (price, amount) => Math.max(price - (Math.abs(amount) > price ? price : Math.abs(amount)), 0)
+const amount = (price, amount) =>
+  Math.max(price - (Math.abs(amount) > price ? price : Math.abs(amount)), 0)
+
+/**
+ * Check input is acceptable string.
+ * [^a-z^A-Z]+ // Matchs any non word chars numerics excluded also.
+ * @param {?String} input
+ */
+const isAcceptableString = input =>
+  Object.prototype.toString.call(input) === '[object String]' &&
+    input.replace(new RegExp('[^a-z^A-Z]+'), '').length > 0
+
+/**
+ * Check input is number.
+ * @param {?Number} input
+ */
+const isNumber = input =>
+  Object.prototype.toString.call(input) === '[object Number]' && !isNaN(input)
+
+/**
+ * Check input is number and greater than zero.
+ * @param {?Number} input
+ */
+const isGreaterThanZero = input =>
+  isNumber(input) && input > 0
 
 /** Discount helper methods composer. */
 const helpers = {
   discount: {
-    /** Rate calculator */
     rate,
     amount
-  }
+  },
+  isAcceptableString,
+  isNumber,
+  isGreaterThanZero
 }
 
 export default helpers

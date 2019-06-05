@@ -1,10 +1,30 @@
 import { Product, Category } from '../src'
 
-test('Product can not be generated without category', () => {
-  expect(new Product('Crash', 1).category).toEqual(new Category('Undefined'))
-})
+const mockCategory = new Category('Test')
 
-test('Product price can not lower than 0 or equal', () => {
-  expect(new Product('Crash', 0).price).toBe(0)
-  expect(new Product('Crash', -1).price).toBe(1)
+describe('Product suite', () => {
+  describe('when title is', () => {
+    it('undefined', () =>
+      expect(() => new Product(undefined, 1, mockCategory)).toThrowError(new Error('Title is not in acceptable form.')))
+    it('0', () => expect(() =>
+      new Product(0, 1, mockCategory))
+      .toThrowError(new Error('Title is not in acceptable form.')))
+    it('numeric but has string constructor.', () => expect(() =>
+      new Product('0', 1, mockCategory))
+      .toThrowError(new Error('Title is not in acceptable form.')))
+    it('non word chars', () => expect(() =>
+      new Product('!!!', 1, mockCategory))
+      .toThrowError(new Error('Title is not in acceptable form.')))
+    it('multiple spaces', () => expect(() =>
+      new Product('       ', 0, mockCategory))
+      .toThrowError(new Error('Title is not in acceptable form.')))
+  })
+  describe('when price', () => {
+    it('is 0', () => expect(() => new Product('Test Product', 0, mockCategory)).toThrowError(new Error('Price is not in acceptable form.')))
+    it('is "0"', () => expect(() => new Product('Test Product', '0', mockCategory)).toThrowError(new Error('Price is not in acceptable form.')))
+  })
+  describe('when category is', () => {
+    it('not valid', () => expect(() => new Product('Test', 1, 'Test')).toThrowError(new Error('Category must be initialized properly.')))
+    it('valid', () => expect(new Product('Test', 1, new Category('Test')).category instanceof Category).toEqual(true))
+  })
 })

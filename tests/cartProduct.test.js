@@ -1,112 +1,71 @@
 import { Cart, Category, Product, CartProduct } from '../src/models'
 
-const generator = () => {
-  return {
-    cart: new Cart(),
-    apple: new Product('Apple', 100, new Category('Vegan')),
-    banana: new Product('Banana', 100, new Category('Vegan'))
-  }
-}
-
-test('Check CardProduct without product', () => {
-  expect(() => {
-    // eslint-disable-next-line
-    new CartProduct()
-  }).toThrowError(new Error('Product does not exists'))
-})
-
-test('Add single product to cart', () => {
-  const { cart, apple } = generator()
-
-  const cartProduct = new CartProduct(apple, 5.0)
-  cart.addItem(apple, 5.0)
-
-  expect(cart.products[0]).toEqual(cartProduct)
-})
-
-test('Add multiple product to cart with same category', () => {
-  const {
-    cart,
-    banana,
-    apple
-  } = generator()
-  cart.addItem(apple, 5.0)
-  cart.addItem(banana, 5.0)
-
-  expect(cart.products).toEqual([
-    new CartProduct(apple, 5.0),
-    new CartProduct(banana, 5.0)
-  ])
-})
-
-test('Check false adding', () => {
-  const {
-    cart,
-    apple
-  } = generator()
-
-  expect(() => {
-    cart.addItem(apple, -5.0)
-  }).toThrowError(new Error('-5 as a quantity, is not acceptable, quantity must be bigger than 0'))
-})
-
-test('Check false adding quantity', () => {
-  const {
-    cart,
-    apple
-  } = generator()
-
-  expect(() => {
-    cart.addItem(apple, 1.5)
-  }).toThrowError(new Error('Quantity must be int.'))
-})
-
-test('Check false adding quantity', () => {
-  const {
-    cart,
-    apple
-  } = generator()
-
-  expect(() => {
-    cart.addItem(apple, 1)
-    cart.addItem(apple, 1.5)
-  }).toThrowError(new Error('Quantity must be int.'))
-})
-
-test('Check quantity calculation', () => {
-  const {
-    cart,
-    apple
-  } = generator()
-  cart.addItem(apple, 1000)
-  cart.addItem(apple, -999)
-  expect(cart.products).toEqual([
-    new CartProduct(apple, 1)
-  ])
-})
-
-test('Check false adding -> removal', () => {
-  const {
-    cart,
-    apple
-  } = generator()
-
-  expect(() => {
-    cart.addItem(apple, 5.0)
-    cart.addItem(apple, -5.0)
-  }).toThrowError(new Error('Product removed from your cart.'))
-
-  expect(() => {
-    cart.addItem(apple, 5.0)
-    cart.addItem(apple, -10.0)
-  }).toThrowError(new Error('Quantity must be acceptable.'))
-})
-
-test('Removing non existance product from cart must work without hassle.', () => {
-  const {
-    cart,
-    apple
-  } = generator()
-  cart.removeItem(apple, 5.0)
-  expect(cart.products).toEqual([])
+describe('Cart product suite', () => {
+  describe('when constructed', () => {
+    it('without product', () => {
+      expect(() => new CartProduct(undefined)).toThrowError(new Error('Product must be binded.'))
+    })
+    it('with wrong class', () => {
+      expect(() => new CartProduct(new Category('Wrong way'))).toThrowError(new Error('Product must be binded.'))
+    })
+    describe('quantity is', () => {
+      const product = new Product('Test Product', 1, new Category('Test Category'))
+      it('floating number', () => {
+        expect(() => new CartProduct(product, 1.5)).toThrowError(new Error('Quantity must be int.'))
+      })
+      it('negative number', () => {
+        expect(() => new CartProduct(product, -1)).toThrowError(new Error('-1 as a quantity, is not acceptable, quantity must be bigger than 0'))
+      })
+    })
+    describe('must be', () => {
+      it('total calculated', () => {
+        const product = new Product('Test Product', 1, new Category('Test Category'))
+        expect(new CartProduct(product, 2).total).toBe(2)
+      })
+      it('price after discount setted total', () => {
+        const product = new Product('Test Product', 1, new Category('Test Category'))
+        expect(new CartProduct(product, 2).priceAfterDiscount).toBe(2)
+      })
+    })
+  })
+  describe('when in usage', () => {
+    describe('when change quantity direct', () => {
+      const product = new Product('Test Product', 1, new Category('Test Category'))
+      const cartProduct = new CartProduct(product, 2)
+      it('+', () => {
+        expect(() => {
+          cartProduct.quantity = 1.1
+        }).toThrowError(new Error('Quantity must be int.'))
+      })
+      it('- but not acceptable', () => {
+        expect(() => {
+          cartProduct.quantity = -2
+        }).toThrowError(new Error('Quantity must be acceptable.'))
+      })
+    })
+    describe('when change quantity indirect', () => {
+      it('+', () => {
+        const cart = new Cart()
+        const product = new Product('Test Product', 1, new Category('Test Category'))
+        cart.addItem(product, 2)
+        cart.addItem(product, 2)
+        expect(cart.products[0].quantity).toBe(4)
+      })
+      it('-', () => {
+        const cart = new Cart()
+        const product = new Product('Test Product', 1, new Category('Test Category'))
+        cart.addItem(product, 2)
+        cart.addItem(product, -1)
+        expect(cart.products[0].quantity).toBe(1)
+      })
+      it('- till remove', () => {
+        const cart = new Cart()
+        const product = new Product('Test Product', 1, new Category('Test Category'))
+        cart.addItem(product, 2)
+        expect(() => {
+          cart.addItem(product, -2)
+        }).toThrowError(new Error('Product removed from your cart.'))
+      })
+    })
+  })
 })

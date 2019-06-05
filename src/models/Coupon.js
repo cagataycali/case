@@ -18,6 +18,14 @@ class Coupon {
    * @param {String} type - The type can be "amount" or "rate".
    */
   constructor (delimiter, worth, type) {
+    if (worth < 0 || delimiter < 0) {
+      throw new Error('Delimiter and worth must be bigger than 0.')
+    }
+    // If type is rate, worth > 100, must be 100.
+    if (worth > 100 && type === 'rate') {
+      worth = 100
+    }
+    this.worth = worth
     this.delimiter = delimiter
     this.worth = worth
     this.type = type

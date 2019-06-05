@@ -22,14 +22,14 @@ class Campaign {
    */
   constructor (category = new Category('Undefined'), worth, delimiter, type) {
     this.category = category
-    if (worth < 0) {
-      throw new Error('Worth must be bigger than 0')
+    if (worth < 0 || delimiter < 0) {
+      throw new Error('Delimiter and worth must be bigger than 0.')
     }
     // If type is rate, worth > 100, must be 100.
     this.worth = type === 'rate' && worth > 100 ? 100 : worth
-    if (type === 'amount' && worth > delimiter) {
-      throw new Error('Worth can not be greater delimiter when campaign type is amount.')
-    }
+    // if (type === 'amount' && worth > delimiter) {
+    //   throw new Error('Worth can not be greater delimiter when campaign type is amount.')
+    // }
     this.delimiter = delimiter
     this.type = type
   }
@@ -39,10 +39,18 @@ class Campaign {
    * @return {Number} Returns calculated discount.
    */
   apply (price) {
-    if (this.type === 'amount' && price < this.delimiter) {
-      const error = `Price "${price}" must be bigger than delimiter amount "${this.delimiter}" for use this campaign.`
+    if (price < 0) {
+      const error = `Price "${price}" must be bigger than 0.`
       throw new Error(error)
     }
+    // if (this.type === 'amount' && price < this.delimiter) {
+    // const error = `Price "${price}" must be bigger than delimiter amount "${this.delimiter}" for use this campaign.`
+    // throw new Error(error)
+    // }
+    // if (this.type === 'amount' && price < this.delimiter) {
+    //   const error = `Price "${price}" must be bigger than delimiter amount "${this.delimiter}" for use this campaign.`
+    //   throw new Error(error)
+    // }
 
     return helpers.discount[this.type](price, this.worth)
   }

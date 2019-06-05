@@ -17,6 +17,7 @@ class Cart extends CartHelper {
     this.totalSavingViaCampaign = 0
     this.couponDiscount = 0
     this.campaignUsed = false
+    this.couponUsed = false
   }
 
   /**
@@ -38,7 +39,7 @@ class Cart extends CartHelper {
 
     if (!cartProduct) {
       this.products.push(new CartProduct(product, quantity))
-    } else if (cartProduct.quantity === Math.abs(quantity)) {
+    } else if (cartProduct.quantity === Math.abs(quantity) && quantity < 0) {
       this.removeItem(cartProduct)
       throw new Error('Product removed from your cart.')
     } else {
@@ -57,9 +58,6 @@ class Cart extends CartHelper {
    * @param {Product} product
    */
   removeItem (product) {
-    if (product instanceof CartProduct) {
-      product = product.product
-    }
     this.products = this.products.filter(({
       product: _product
     }) => _product !== product)
@@ -139,7 +137,8 @@ class Cart extends CartHelper {
         let apply = true
         if (discount && (discount.apply(total) < min)) {
           // Apply discount only delimiter fits the campaign
-          apply = (discount.type === 'rate' ? categories.get(category.title) : total) >= discount.delimiter
+          apply = categories.get(category.title) >= discount.delimiter
+          // apply = (discount.type === 'rate' ? categories.get(category.title) : total) >= discount.delimiter
           // Gotcha!
           if (apply) {
             min = discount.apply(total)
@@ -176,17 +175,28 @@ class Cart extends CartHelper {
    * @param {Coupon} coupon
    */
   applyCoupon (coupon) {
-    const total = this.totalAfterDiscount || this.total
+    const total = this.totalAfterDiscount
 
-    if (this.couponDiscount > 0) {
+    if (this.couponUsed) {
       throw new Error('Another coupon has applied.')
     }
     if (total >= coupon.delimiter) {
       this.coupon = coupon
       this.couponDiscount = total - coupon.apply(total)
+      this.couponUsed = true
     } else {
+      this.couponUsed = false
       throw new Error('Coupon does not fits delimiter.')
     }
+  }
+
+  /**
+ * Public method getCampaignDiscounts takes target discont, returns discounted product.
+ * @param {Campaign} campaign
+ * @return Returns discount applied product.
+ */
+  getCampaignDiscounts (campaign) {
+    return this.products.find(product => product.discount === campaign)
   }
 }
 

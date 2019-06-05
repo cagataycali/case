@@ -27,7 +27,7 @@
 
 <nav >
     
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Campaign.html">Campaign</a><ul class='methods'><li data-type='method'><a href="Campaign.html#apply">apply</a></li></ul></li><li><a href="Cart.html">Cart</a><ul class='methods'><li data-type='method'><a href="Cart.html#addItem">addItem</a></li><li data-type='method'><a href="Cart.html#removeItem">removeItem</a></li><li data-type='method'><a href="Cart.html#flattenCategories">flattenCategories</a></li><li data-type='method'><a href="Cart.html#applyDiscounts">applyDiscounts</a></li><li data-type='method'><a href="Cart.html#applyCoupon">applyCoupon</a></li><li data-type='method'><a href="Cart.html#getCampaignDiscounts">getCampaignDiscounts</a></li></ul></li><li><a href="CartHelper.html">CartHelper</a><ul class='members'><li data-type='member'><a href="CartHelper.html#.total">total</a></li><li data-type='member'><a href="CartHelper.html#.totalAfterDiscount">totalAfterDiscount</a></li><li data-type='member'><a href="CartHelper.html#distinctCategoryCount">distinctCategoryCount</a></li></ul><ul class='methods'><li data-type='method'><a href="CartHelper.html#getCampaignDiscounts">getCampaignDiscounts</a></li></ul></li><li><a href="CartProduct.html">CartProduct</a></li><li><a href="Category.html">Category</a></li><li><a href="Coupon.html">Coupon</a><ul class='methods'><li data-type='method'><a href="Coupon.html#apply">apply</a></li></ul></li><li><a href="Delivery.html">Delivery</a><ul class='methods'><li data-type='method'><a href="Delivery.html#calculateFor">calculateFor</a></li></ul></li><li><a href="Product.html">Product</a></li></ul><h3>Global</h3><ul><li><a href="global.html#rate">rate</a></li><li><a href="global.html#amount">amount</a></li><li><a href="global.html#helpers">helpers</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Campaign.html">Campaign</a><ul class='methods'><li data-type='method'><a href="Campaign.html#apply">apply</a></li></ul></li><li><a href="Cart.html">Cart</a><ul class='methods'><li data-type='method'><a href="Cart.html#addItem">addItem</a></li><li data-type='method'><a href="Cart.html#removeItem">removeItem</a></li><li data-type='method'><a href="Cart.html#flattenCategories">flattenCategories</a></li><li data-type='method'><a href="Cart.html#applyDiscounts">applyDiscounts</a></li><li data-type='method'><a href="Cart.html#applyCoupon">applyCoupon</a></li><li data-type='method'><a href="Cart.html#getCampaignDiscounts">getCampaignDiscounts</a></li></ul></li><li><a href="CartHelper.html">CartHelper</a><ul class='members'><li data-type='member'><a href="CartHelper.html#.total">total</a></li><li data-type='member'><a href="CartHelper.html#.totalAfterDiscount">totalAfterDiscount</a></li><li data-type='member'><a href="CartHelper.html#distinctCategoryCount">distinctCategoryCount</a></li></ul></li><li><a href="CartProduct.html">CartProduct</a></li><li><a href="Category.html">Category</a></li><li><a href="Coupon.html">Coupon</a><ul class='methods'><li data-type='method'><a href="Coupon.html#apply">apply</a></li></ul></li><li><a href="Delivery.html">Delivery</a><ul class='methods'><li data-type='method'><a href="Delivery.html#calculateFor">calculateFor</a></li></ul></li><li><a href="Product.html">Product</a></li></ul><h3>Global</h3><ul><li><a href="global.html#rate">rate</a></li><li><a href="global.html#amount">amount</a></li><li><a href="global.html#isAcceptableString">isAcceptableString</a></li><li><a href="global.html#isNumber">isNumber</a></li><li><a href="global.html#isGreaterThanZero">isGreaterThanZero</a></li><li><a href="global.html#helpers">helpers</a></li></ul>
 </nav>
 
 <div id="main">
@@ -53,7 +53,8 @@
  * @param {Number} rate - Ratio.
  * @returns {Number} Method apply discount given price by rate.
  */
-const rate = (price, rate) => Math.max(0, price - (price * Math.abs(rate) / 100))
+const rate = (price, rate) =>
+  Math.max(0, price - (price * Math.abs(rate) / 100))
 
 /**
  * Amount calculator.
@@ -67,15 +68,41 @@ const rate = (price, rate) => Math.max(0, price - (price * Math.abs(rate) / 100)
  * @param {Number} rate - Ratio.
  * @returns {Number} Method apply discount given price by amount.
  */
-const amount = (price, amount) => Math.max(price - (Math.abs(amount) > price ? price : Math.abs(amount)), 0)
+const amount = (price, amount) =>
+  Math.max(price - (Math.abs(amount) > price ? price : Math.abs(amount)), 0)
+
+/**
+ * Check input is acceptable string.
+ * [^a-z^A-Z]+ // Matchs any non word chars numerics excluded also.
+ * @param {?String} input
+ */
+const isAcceptableString = input =>
+  Object.prototype.toString.call(input) === '[object String]' &amp;&amp;
+    input.replace(new RegExp('[^a-z^A-Z]+'), '').length > 0
+
+/**
+ * Check input is number.
+ * @param {?Number} input
+ */
+const isNumber = input =>
+  Object.prototype.toString.call(input) === '[object Number]' &amp;&amp; !isNaN(input)
+
+/**
+ * Check input is number and greater than zero.
+ * @param {?Number} input
+ */
+const isGreaterThanZero = input =>
+  isNumber(input) &amp;&amp; input > 0
 
 /** Discount helper methods composer. */
 const helpers = {
   discount: {
-    /** Rate calculator */
     rate,
     amount
-  }
+  },
+  isAcceptableString,
+  isNumber,
+  isGreaterThanZero
 }
 
 export default helpers
@@ -93,7 +120,7 @@ export default helpers
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Wed Jun 05 2019 01:53:08 GMT+0300 (GMT+03:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Wed Jun 05 2019 08:41:36 GMT+0300 (GMT+03:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

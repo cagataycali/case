@@ -40,6 +40,10 @@ class CartHelper {
     return total
   }
 
+  get overallTotal () {
+    return this.totalAfterDiscount - this.couponDiscount
+  }
+
   /**
    * The getter calculates how many distinct category exists reactively.
    */
@@ -50,15 +54,6 @@ class CartHelper {
       categories.set(category.title, (categories.get(category.title) + 1 || 1))
     })
     return categories.size
-  }
-
-  /**
-   * Public method getCampaignDiscounts takes target discont, returns discounted product.
-   * @param {Campaign} discount
-   * @return Returns discount applied product.
-   */
-  getCampaignDiscounts (discount) {
-    return this.products.find(product => product.discount === discount)
   }
 }
 

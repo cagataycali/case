@@ -6,193 +6,169 @@ import {
   Coupon
 } from '../src/models'
 
-const generator = () => {
-  return {
-    cart: new Cart(),
-    apple: new Product('Apple', 100, new Category('Vegan')),
-    banana: new Product('Banana', 100, new Category('Vegan')),
+const _cart = () => new Cart()
 
-    category: {
-      electronic: new Category('Electronic')
-    },
-    campaign: {
-      electronic: new Campaign(new Category('Electronic'), 10, 1, 'rate')
-    }
-  }
-}
+test('Empty cart creation works w/o hassle', () => expect(new Cart() instanceof Cart).toEqual(true))
 
-const { category } = generator()
-const iOS = new Category('iOS', category.electronic, true)
-const iPhone = new Product('iPhone XS Max', 8000, iOS)
+describe('Cart integration suite', () => {
+  /**
+   * Let's generate our mock data for integration suite.
+   */
 
-test('Initialize cart without products', () => {
-  expect(new Cart()).toEqual({
-    'coupon': null,
-    'couponDiscount': 0,
-    'discounts': null,
-    'products': [],
-    'totalSavingViaCampaign': 0,
-    'campaignUsed': false
+  // CATEGORIES START
+  const electronic = new Category('Electronic')
+  const telephone = new Category('Telephone', electronic)
+  const tablet = new Category('Tablet', electronic)
+
+  const ios = new Category('iOS', telephone)
+  // CATEGORIES END
+
+  // PRODUCTS START
+  const iPhone7 = new Product('iPhone 7', 4000, ios)
+  const iPhoneXS = new Product('iPhone XS', 9000, ios)
+
+  const GalaxyTab = new Product('Galaxy Tab', 3000, tablet)
+  // PRODUCTS END
+
+  // CAMPAIGNS START
+  // %10 discount when 3 electronic device or more.
+  const electronicCampaign = new Campaign(electronic, 10, 3, 'rate')
+
+  // %20 discount when 2 telephone or more.
+  const telephoneCampaign = new Campaign(telephone, 20, 2, 'rate')
+
+  // %20 discount when 1 tablet or more.
+  const tabletCampaign = new Campaign(tablet, 20, 1, 'rate')
+  // CAMPAIGNS END
+
+  // COUPONS START
+  // 100 TL discount if cart total greater than 3000 TL
+  const coupon0 = new Coupon(3000, 100, 'amount')
+
+  // 500 TL discount if cart total greater than 10000 TL
+  const coupon1 = new Coupon(10000, 500, 'amount')
+
+  // %10 discount if cart total greater than 3000 TL
+  const coupon2 = new Coupon(3000, 10, 'rate')
+  // COUPONS END
+
+  describe('adding product to cart for', () => {
+    describe('flattens categories via counting sort it has', () => {
+      const cart = _cart()
+      cart.addItem(iPhone7, 1)
+      cart.addItem(iPhoneXS, 1)
+
+      it('size 3', () => expect(cart.flattenCategories().size).toEqual(3))
+      it('iOS category', () => expect((cart.flattenCategories()).has('iOS')).toEqual(true))
+      it('Telephone category', () => expect((cart.flattenCategories()).has('Telephone')).toEqual(true))
+      it('Electronic category', () => expect((cart.flattenCategories()).has('Electronic')).toEqual(true))
+    })
   })
-})
-
-describe('Cart integration tests', () => {
-  it('Apply single campaign to parent category of items in basket', () => {
-    const { cart, campaign } = generator()
-
-    cart.addItem(iPhone, 2)
-
-    // Saving must be 1600
-    cart.applyDiscounts(campaign.electronic)
-
-    expect(cart.totalSavingViaCampaign).toEqual(1600)
+  describe('when applying campaign as discount', () => {
+    describe('apply single campaign (campaign binded root category, product belongs to children category)', () => {
+      describe('which no effect', () => {
+        const cart = _cart()
+        cart.addItem(iPhone7, 1)
+        cart.applyDiscounts(electronicCampaign)
+        it('total saving must be 0', () => expect(cart.totalSavingViaCampaign).toBe(0))
+        it('campaignUsed must be false', () => expect(cart.campaignUsed).toEqual(false))
+      })
+      describe('which works like charm', () => {
+        const cart = _cart()
+        cart.addItem(iPhone7, 3) // Fits delimiter of campaign / campaign delimiter is 3.
+        cart.applyDiscounts(electronicCampaign) // Must pick campaign, 4000 * 3 = 12000 % 10 = 1200 TL.
+        it('total saving must be 0', () => expect(cart.totalSavingViaCampaign).toBe(1200))
+        it('campaignUsed must be false', () => expect(cart.campaignUsed).toEqual(true))
+      })
+      describe('can not apply one more time', () => {
+        const cart = _cart()
+        cart.addItem(iPhone7, 3) // Fits delimiter of campaign / campaign delimiter is 3.
+        cart.applyDiscounts(electronicCampaign) // Must pick campaign, 4000 * 3 = 12000 % 10 = 1200 TL.
+        expect(() => cart.applyDiscounts(electronicCampaign)).toThrowError(new Error('Campaign used before'))
+      })
+    })
+    describe('apply multiple campaign', () => {
+      describe('with 2 different rate which', () => {
+        describe('no effect cause', () => {
+          describe('delimiter not fits, category fits.', () => {
+            const cart = _cart()
+            cart.addItem(iPhone7, 1)
+            cart.applyDiscounts(electronicCampaign, telephoneCampaign)
+            it('total saving must be 0', () => expect(cart.totalSavingViaCampaign).toBe(0))
+            it('campaignUsed must be false', () => expect(cart.campaignUsed).toEqual(false))
+          })
+          describe('delimiter not fits, category not fits.', () => {
+            const cart = _cart()
+            cart.addItem(iPhone7, 1)
+            cart.applyDiscounts(tabletCampaign, telephoneCampaign)
+            it('total saving must be 0', () => expect(cart.totalSavingViaCampaign).toBe(0))
+            it('campaignUsed must be false', () => expect(cart.campaignUsed).toEqual(false))
+          })
+        })
+        describe('works like charm, picks best campaign ', () => {
+          describe('with single product', () => {
+            const cart = _cart()
+            cart.addItem(iPhone7, 3) // Fits delimiter of campaign / campaign delimiter is 3.
+            cart.applyDiscounts(electronicCampaign, telephoneCampaign) // Must pick best campaign, 4000 * 3 = 12000 % 20 = 2400 TL.
+            it('total saving must be 2400', () => expect(cart.totalSavingViaCampaign).toBe(2400))
+            it('campaignUsed must be true', () => expect(cart.campaignUsed).toEqual(true))
+          })
+          describe('with multiple product - same category', () => {
+            const cart = _cart()
+            cart.addItem(iPhone7, 2) // Fits delimiter of campaign / campaign delimiter is 3.
+            cart.addItem(iPhoneXS, 1) // Fits delimiter of campaign / campaign delimiter is 3.
+            cart.applyDiscounts(electronicCampaign, telephoneCampaign) // Must pick best campaign, 4000 * 2 = (8000 + 9000) % 20 = 3400 TL.
+            it('total saving must be 2400', () => expect(cart.totalSavingViaCampaign).toBe(3400))
+            it('campaignUsed must be true', () => expect(cart.campaignUsed).toEqual(true))
+          })
+          describe('* [EDGE CASE ALERT] * with multiple product - one of different category - must pick another campaign for them', () => {
+            const cart = _cart()
+            cart.addItem(iPhone7, 2) // Fits delimiter of campaign / campaign delimiter is 3.
+            cart.addItem(GalaxyTab, 1) // Fits delimiter of campaign / campaign delimiter is 3.
+            cart.applyDiscounts(electronicCampaign, telephoneCampaign) // Must pick best campaign, (3000 % 10) + (8000 % 20) 300 + 1600  = 1900 TL.
+            it('total saving must be 1900', () => expect(cart.totalSavingViaCampaign).toBe(1900))
+            it('campaignUsed must be true', () => expect(cart.campaignUsed).toEqual(true))
+          })
+        })
+      })
+    })
   })
-
-  it('Add multiple item into basket, apply discount for them', () => {
-    const { cart, campaign, apple, banana } = generator()
-
-    const iPhone7 = new Product('iPhone 7', 3500, iOS)
-
-    // Add to basket 2 iPhone: 8000 * 2 = 16000
-    cart.addItem(iPhone, 2)
-    cart.addItem(iPhone7, 2)
-
-    cart.addItem(apple, 2)
-    cart.addItem(banana, 2)
-
-    // Saving must be 1600
-    cart.applyDiscounts(campaign.electronic)
-
-    expect(cart.totalSavingViaCampaign).toEqual(2300)
+  describe('when applying coupon as a discount', () => {
+    it('apply campaign after coupon used: //throws error', () => {
+      const cart = _cart()
+      cart.addItem(iPhone7, 1)
+      cart.applyCoupon(coupon0)
+      expect(() => cart.applyDiscounts(electronicCampaign)).toThrowError('Campaign can not applicable after using coupon.')
+    })
+    it('does not fit delimiter', () => {
+      const cart = _cart()
+      cart.addItem(iPhone7, 1) // 4000 TL
+      expect(() => cart.applyCoupon(coupon1)).toThrowError(new Error('Coupon does not fits delimiter.'))
+    })
+    it('works like charm', () => {
+      const cart = _cart()
+      cart.addItem(iPhone7, 3) // 4000 * 3 = 12000 TL
+      cart.applyCoupon(coupon1) // Coupon delimiter is 10000 TL, 500 TL discount.
+      expect(cart.couponUsed).toEqual(true)
+      expect(cart.couponDiscount).toEqual(500)
+    })
   })
-
-  it('Multiple campaign binded, cart must pick best campaign', () => {
-    const { cart, campaign } = generator()
-
-    cart.addItem(iPhone, 2)
-
-    // The boss gonna crazy, iOS devices has been %50 discounted for limited time.
-    const iOSCampaign = new Campaign(iOS, 50, 1, 'rate')
-
-    // Saving must be 8000, algorithm must be pick %50
-    cart.applyDiscounts(campaign.electronic, iOSCampaign)
-
-    expect(cart.totalSavingViaCampaign).toEqual(8000)
-  })
-
-  it('Apply discount twice must be throw error', () => {
-    const { cart, campaign } = generator()
-
-    cart.addItem(iPhone, 2)
-
-    // The boss gonna crazy, iOS devices has been %50 discounted for limited time.
-    const iOSCampaign = new Campaign(iOS, 50, 1, 'rate')
-
-    // Saving must be 8000, algorithm must be pick %50
-    cart.applyDiscounts(campaign.electronic, iOSCampaign)
-
-    expect(cart.totalAfterDiscount).toEqual(8000)
-
-    expect(() => {
-      cart.applyDiscounts(campaign.electronic, iOSCampaign)
-    }).toThrowError(new Error('Campaign used before'))
-  })
-
-  it('Pick best campaign', () => {
-    const { cart, apple } = generator()
-    // If cart total amount is bigger than 20 TL, discount 5 TL. It equal = %50 discount.
-    const campaign1 = new Campaign(new Category('Vegan'), 100, 200, 'amount')
-    // If card have 2 vegan item, discount %20
-    const campaign2 = new Campaign(new Category('Vegan'), 20, 2, 'rate')
-
-    // Apple: 100 * 2 = 200 TL
-    cart.addItem(apple, 2)
-
-    // Algorithm must be select campaign1.
-    cart.applyDiscounts(campaign1, campaign2)
-
-    expect(cart.totalSavingViaCampaign).toEqual(100)
-    expect(cart.getCampaignDiscounts(campaign1)).toEqual(cart.products[0])
-  })
-
-  it('Coupon usage twice, campaign after using coupon', () => {
-    const { cart, category } = generator()
-
-    const iPhone = new Product('iPhone XS Max', 8000, category.electronic)
-
-    cart.addItem(iPhone, 1)
-
-    // Over 7000 TL, %10 discount from boss.
-    const coupon = new Coupon(7000, 10, 'rate')
-
-    // Saving via coupon is %10: 8800
-    cart.applyCoupon(coupon)
-
-    // Calculated coupon discount must be 800,
-    expect(cart.couponDiscount).toEqual(800)
-
-    expect(() => {
-      cart.applyCoupon(coupon)
-    }).toThrowError(new Error('Another coupon has applied.'))
-
-    expect(() => {
-      const iOSCampaign = new Campaign(category.electronic, 50, 1, 'rate')
-      cart.applyDiscounts(iOSCampaign)
-    }).toThrowError(new Error('Campaign can not applicable after using coupon.'))
-  })
-
-  it('Non acceptable coupon test', () => {
-    const { cart, category } = generator()
-
-    const iPhone = new Product('iPhone XS Max', 8000, category.electronic)
-
-    cart.addItem(iPhone, 1)
-
-    const coupon = new Coupon(8000.9, 10, 'rate')
-
-    expect(() => {
-      cart.applyCoupon(coupon)
-    }).toThrowError(new Error('Coupon does not fits delimiter.'))
-  })
-
-  it('Check delimited campaign by rate', () => {
-    const { cart, campaign } = generator()
-    // Add to basket 2 iPhone: 8000 * 2 = 16000
-    cart.addItem(iPhone, 2)
-
-    /*
-      The boss gonna crazy, iOS devices has been %50 discounted for limited time.
-      If you buy 3 iPhone!
-     */
-    const iOSCampaign = new Campaign(iOS, 50, 3, 'rate')
-
-    /*
-      Saving must'nt be 8000,
-      Algorithm must pick %10 discounted campaign.
-      That's the changing game, saving is 1600
-    */
-    cart.applyDiscounts(campaign.electronic, iOSCampaign)
-
-    expect(cart.totalSavingViaCampaign).toEqual(1600)
-  })
-
-  it('Check delimited campaign by amount', () => {
-    const { cart, category } = generator()
-    // Add to basket 2 iPhone: 8000 * 2 = 16000
-    cart.addItem(iPhone, 2)
-
-    /*
-      The boss gonna crazy, Electronic devices has been discounted 1000 TL,
-      If your cart total >= 20000
-     */
-    const insaneCampaign = new Campaign(category.electronic, 1000, 20000, 'amount')
-
-    /*
-      Next time friend, your cart total is 16000,
-      That's the reason u can not pick insane campaign.
-    */
-    expect(() => {
-      cart.applyDiscounts(insaneCampaign)
-    }).toThrowError(new Error('Price "16000" must be bigger than delimiter amount "20000" for use this campaign.'))
+  describe('* [EDGE CASE ALERT] * Campaign + coupon usage with 2 different sub category', () => {
+    const cart = _cart()
+    cart.addItem(iPhone7, 2) // 8000 TL % 20 = 1600.
+    cart.addItem(GalaxyTab, 1) // 3000 TL % 30 = 900.
+    // 8000 + 3000 = 12000 - (1900) = 10100 % 10 = 910.
+    cart.applyDiscounts(electronicCampaign, telephoneCampaign) // Must pick best campaign, (3000 % 10) + (8000 % 20) 300 + 1600  = 1900 TL.
+    cart.applyCoupon(coupon2) // Coupon delimiter is 3000 TL, %10 discount.
+    it('total saving via campaign must be 1900', () => expect(cart.totalSavingViaCampaign).toBe(1900))
+    it('campaignUsed must be true', () => expect(cart.campaignUsed).toEqual(true))
+    it('couponUsed must be true', () => expect(cart.couponUsed).toEqual(true))
+    it('coupon discount must be 910', () => expect(cart.couponDiscount).toBe(910))
+    it('Overall Total 8190', () => expect(cart.overallTotal).toBe(8190)) // :)
+    it('another coupon can not be appliable', () => expect(() => cart.applyCoupon(coupon2)).toThrowError(new Error('Another coupon has applied.')))
+    it('cart class can be return which products applied spesific campain', () => {
+      // If one item has been applied is object otherwise array.
+      expect(cart.getCampaignDiscounts(electronicCampaign).title).toEqual('Galaxy Tab')
+    })
   })
 })

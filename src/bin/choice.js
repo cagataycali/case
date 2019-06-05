@@ -64,8 +64,8 @@ export default class Choice {
       choice,
       quantity
     }) => {
-      const product = products.find(_product => _product.title === choice)
-      this.db.cart.removeItem(product)
+      const cardProduct = products.find(_product => _product.title === choice)
+      this.db.cart.removeItem(cardProduct.product)
       console.log(colors.bold.green(`"${choice}" removed your basket\tTOTAL: ${this.db.cart.total}`))
       console.log()
       callback()
