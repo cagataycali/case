@@ -15,7 +15,7 @@
     "lint": "eslint --ignore-pattern \"node_modules/**/*.js\" \"src/models/**/*.js\" --fix",
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "docs": "rm -rf docs/ && jsdoc --configure .jsdoc.json --verbose",
-    "pages": "rsync -r docs/**/**/* docs/ && rsync assets/* docs/assets/"
+    "pages": "rsync -r docs/**/**/* docs/ && rsync assets/* docs/assets/ && rsync -r coverage/* docs/coverage/"
   },
   "bin": {
     "ccase": "./lib/bin/index.js"

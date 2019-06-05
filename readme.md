@@ -27,3 +27,5 @@ ccase
 > Implementation is fully documented with [JSDoc](https://devdocs.io/jsdoc/),
 
 [Documentation](https://cagatay.js.org/case/)
+
+[Code Coverage Result](https://cagatay.js.org/case/coverage/lcov-report/)
