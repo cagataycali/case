@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1559713188513" clover="3.2.0">
-  <project timestamp="1559713188513" name="All files">
-    <metrics statements="140" coveredstatements="140" conditionals="80" coveredconditionals="80" methods="37" coveredmethods="37" elements="257" coveredelements="257" complexity="0" loc="140" ncloc="140" packages="2" files="8" classes="8"/>
+<coverage generated="1559713429173" clover="3.2.0">
+  <project timestamp="1559713429173" name="All files">
+    <metrics statements="146" coveredstatements="146" conditionals="85" coveredconditionals="85" methods="39" coveredmethods="39" elements="270" coveredelements="270" complexity="0" loc="146" ncloc="146" packages="2" files="11" classes="11"/>
     <package name="src">
       <metrics statements="11" coveredstatements="11" conditionals="8" coveredconditionals="8" methods="5" coveredmethods="5"/>
       <file name="helpers.js" path="/Users/cagataycali/Desktop/case/src/helpers.js">
@@ -18,9 +18,12 @@
         <line num="51" count="50" type="cond" truecount="2" falsecount="0"/>
         <line num="54" count="9" type="stmt"/>
       </file>
+      <file name="index.js" path="/Users/cagataycali/Desktop/case/src/index.js">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
     </package>
     <package name="src.models">
-      <metrics statements="129" coveredstatements="129" conditionals="72" coveredconditionals="72" methods="32" coveredmethods="32"/>
+      <metrics statements="135" coveredstatements="135" conditionals="77" coveredconditionals="77" methods="34" coveredmethods="34"/>
       <file name="Campaign.js" path="/Users/cagataycali/Desktop/case/src/models/Campaign.js">
         <metrics statements="10" coveredstatements="10" conditionals="11" coveredconditionals="11" methods="2" coveredmethods="2"/>
         <line num="24" count="16" type="stmt"/>
@@ -159,6 +162,15 @@
         <line num="41" count="1" type="stmt"/>
         <line num="43" count="6" type="stmt"/>
       </file>
+      <file name="Delivery.js" path="/Users/cagataycali/Desktop/case/src/models/Delivery.js">
+        <metrics statements="6" coveredstatements="6" conditionals="5" coveredconditionals="5" methods="2" coveredmethods="2"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="23" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+      </file>
       <file name="Product.js" path="/Users/cagataycali/Desktop/case/src/models/Product.js">
         <metrics statements="9" coveredstatements="9" conditionals="6" coveredconditionals="6" methods="1" coveredmethods="1"/>
         <line num="18" count="54" type="stmt"/>
@@ -170,6 +182,9 @@
         <line num="25" count="2" type="stmt"/>
         <line num="27" count="47" type="cond" truecount="2" falsecount="0"/>
         <line num="28" count="1" type="stmt"/>
+      </file>
+      <file name="index.js" path="/Users/cagataycali/Desktop/case/src/models/index.js">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
     </package>
   </project>
